@@ -32,17 +32,23 @@ const listCrypto = (crypto, exchange) => {
 // };
 
 const fetchCoins = async () => {
-
-  const response = await fetch(coinsUrl)
-  const data = await response.json();
-  fetchExchange(data.data)
+  try {
+    const response = await fetch(coinsUrl)
+    const data = await response.json();
+    await fetchExchange(data.data)
+  } catch (error) {
+    console.log(`Erro com as moedas! ${error}`)
+  }
 };
 
 const fetchExchange = async (coins) => {
-
-  const response = await fetch(exchangerUrl)
-  const data = await response.json();
-  listCrypto(coins, data.usd)
+  try {
+    const response = await fetch(exchangerUrl)
+    const data = await response.json();
+    listCrypto(coins, data.usd)
+  } catch (error) {
+    console.log(`Erro com a troca! ${error}`)
+  }
 };
 
 window.onload = () => fetchCoins();
