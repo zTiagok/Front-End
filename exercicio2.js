@@ -23,21 +23,26 @@ const listCrypto = (crypto, exchange) => {
   });
 };
 
-const fetchCoins = () => {
-  fetch(coinsUrl)
-  .then(response => response.json())
-  .then(data => {
-    fetchExchange(data.data)
-  })
+// const fetchCoins = () => {
+//   fetch(coinsUrl)
+//   .then(response => response.json())
+//   .then(data => {
+//     fetchExchange(data.data)
+//   })
+// };
+
+const fetchCoins = async () => {
+
+  const response = await fetch(coinsUrl)
+  const data = await response.json();
+  fetchExchange(data.data)
 };
 
-const fetchExchange = (coins) => {
+const fetchExchange = async (coins) => {
 
-  (fetch(exchangerUrl)
-  .then(response => response.json())
-  .then(exchange => {
-    listCrypto(coins, exchange.usd)
-  }))
+  const response = await fetch(exchangerUrl)
+  const data = await response.json();
+  listCrypto(coins, data.usd)
 };
 
 window.onload = () => fetchCoins();
